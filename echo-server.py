@@ -4,11 +4,11 @@ import os
 import redis
 from flask import Flask, request
 
-HOST = '1.2.3.4'  #Standart loopback inerface address (localhost)
+HOST = '0.0.0.0'  #Standart loopback inerface address (localhost)
 PORT = 65432      # Port to listen on (non-privileged ports are > 1023)
 
 def cache_put(key, value):
-    cache = redis.Redis(host=HOST, port=6379)
+    cache = redis.Redis('rediska', port=6379)
     cache.ping()
     if cache.exists(key):
         return True
@@ -17,7 +17,7 @@ def cache_put(key, value):
         return False
 
 def cache_get(key):
-    cache = redis.Redis(host=HOST, port=6379)
+    cache = redis.Redis('rediska', port=6379)
     cache.ping()
     if cache.exists(key):
         return cache.get(key)
@@ -25,7 +25,7 @@ def cache_get(key):
         return None
 
 def cache_delete(key):
-    cache = redis.Redis(host=HOST, port=6379)
+    cache = redis.Redis('rediska', port=6379)
     cache.ping()
     if cache.exists(key):
         cache.delete(key)
